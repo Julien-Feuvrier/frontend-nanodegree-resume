@@ -13,9 +13,27 @@ var bio = {	"name" : name,
 			"skills" : ["C", "C++", "Java", "C#", "HTML", "PL/SQL"]
 		};
 
-var work = 	{};
-work.position = "student";
-work.years = 0;
+var work = {	
+				"jobs" : 
+				[
+					{
+						"employer" : "No one",
+						"title" : "Student",
+						"location" : "Nancy",
+						"description" : "Study computer science in an engineering school.",
+						"dates" : "September 2014 - Today",
+						"years" : 2
+					},
+					{
+						"employer" : "Mondelez",
+						"title" : "Machine worker",
+						"location" : "Besançon",
+						"description" : "Maintain and assuring the well functionning of some machines on one production line",
+						"dates" : "June 2015 - July 2015",
+						"years" : 0.1
+					}
+				]
+			};
 
 var education = 
 	{
@@ -42,5 +60,50 @@ var project = 	{
 					"dates" : "january-june 2015"
 				};
 
+// header
+var formattedName = HTMLheaderName.replace("%data%", bio.name);
+var formattedRole = HTMLheaderRole.replace("%data%", bio.role);
+var formattedTel = HTMLmobile.replace("%data%", bio.contactInfo.mobile);
+var formattedEmail = HTMLemail.replace("%data%", bio.contactInfo.email);
+var formattedGithub = HTMLgithub.replace("%data%", bio.contactInfo.github);
+var formattedBitbucket = HTMLbitbucket.replace("%data%", bio.contactInfo.bitbucket);
 
+$("#header").prepend(formattedRole);
+$("#header").prepend(formattedName);
+$("#header").append(formattedTel);
+$("#header").append(formattedEmail);
+$("#header").append(formattedGithub);
+$("#header").append(formattedBitbucket);
+
+// skills
+var skills = bio.skills;
+
+if (skills)
+{
+	$("#header").append(HTMLskillsStart);
+	var i;
+
+	for (i = 0 ; i < skills.length ; i++)
+	{
+		$("#header").append(HTMLskills.replace("%data%", skills[i]));
+	}
+}
+
+function displayWork()
+{
+	// work experience
+	for (w in work.jobs)
+	{
+		$("#workExperience").append(HTMLworkStart);
+		
+		var formattedEmployer = HTMLworkEmployer.replace("%data%", work.jobs[w].employer);
+		var formattedTitle = HTMLworkTitle.replace("%data%", work.jobs[w].title);
+		var formattedDates = HTMLworkDates.replace("%data%", work.jobs[w].dates);
+		var formattedDescription = HTMLworkDescription.replace("%data%", work.jobs[w].description);
+
+		$(".work-entry:last").append(formattedEmployer + formattedTitle + formattedDates + formattedDescription);
+	}
+}
+
+displayWork();
 
