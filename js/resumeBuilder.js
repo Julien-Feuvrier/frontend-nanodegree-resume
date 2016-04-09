@@ -54,11 +54,27 @@ var education =
 			]
 	};
 
-var project = 	{
-					"title" : "TyrantAssault",
-					"description" : "A tactical RPG made in C language",
-					"dates" : "january-june 2015"
-				};
+var projects = {};
+projects.projects = [
+						{
+							"title" : "TyrantAssault",
+							"description" : "A tactical RPG made in C language",
+							"dates" : "january-june 2015"
+						}
+					];
+projects.display = function()
+{
+	for (project in projects.projects)
+	{
+		$("#projects").append(HTMLprojectStart);
+		$(".project-entry:last").append(HTMLprojectTitle.replace("%data%", projects.projects[project].title));
+		$(".project-entry:last").append(HTMLprojectDates.replace("%data%", projects.projects[project].dates));
+		$(".project-entry:last").append(HTMLprojectDescription.replace("%data%", projects.projects[project].description));
+	}
+};
+
+// main
+$("#main").append(internationalizeButton);
 
 // header
 var formattedName = HTMLheaderName.replace("%data%", bio.name);
@@ -107,3 +123,15 @@ function displayWork()
 
 displayWork();
 
+$(document).click(function (loc) { var x = loc.pageX; var y = loc.pageY; logClicks(x, y);})
+
+function inName(name)
+{
+	var s = name.split(" ");
+
+	return s[0][0].toUpperCase() + s[0].slice(1).toLowerCase() + " " + s[1].toUpperCase();
+}	
+
+projects.display();
+
+$("#mapDiv").append(googleMap);
